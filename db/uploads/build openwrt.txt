@@ -1,0 +1,12 @@
+opkg install kmod-mii kmod-usb-net kmod-usb-wdm kmod-usb-net-qmi-wwan uqmi luci-proto-qmi
+opkg install kmod-usb-net-cdc-ether kmod-usb-serial-option kmod-usb-serial kmod-usb-serial-wwan qmi-utils
+opkg install kmod-usb-serial-qualcomm kmod-usb-acm kmod-usb-net-cdc-ncm kmod-usb-net-cdc-mbim umbim
+opkg install modemmanager luci-proto-modemmanager usbutils
+
+
+luci-app-modeminfo modeminfo luci-app-watchcat luci-app-mmconfig luci-app-mwan3 luci-i18n-base-vi
+
+
+
+
+kmod-mii kmod-usb-net kmod-usb-wdm kmod-usb-net-qmi-wwan uqmi luci-proto-qmi kmod-usb-net-cdc-ether kmod-usb-serial-option kmod-usb-serial kmod-usb-serial-wwan qmi-utils kmod-usb-serial-qualcomm kmod-usb-acm kmod-usb-net-cdc-ncm kmod-usb-net-cdc-mbim umbim modemmanager luci-proto-modemmanager usbutils kmod-mhi-wwan-mbim mbim-utils libmbim luci-proto-mbim luci-app-modeminfo modeminfo luci-app-watchcat luci-app-mmconfig luci-app-mwan3 luci-i18n-base-vi

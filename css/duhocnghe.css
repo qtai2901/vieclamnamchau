@@ -1,0 +1,16 @@
+#searchduhocnghe {
+    background-color: #0000FF; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Loại bỏ viền */
+    border-radius: 10px; /* Bo tròn góc */
+    padding: 5px 15px; /* Kích thước nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer;
+    text-align: center;
+
+  }
+  
+  /* Hiệu ứng hover */
+  #searchduhocnghe:hover {
+    background-color: #0000CC; /* Màu nền xanh đậm khi hover */
+  }

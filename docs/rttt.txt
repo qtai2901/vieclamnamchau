@@ -1,0 +1,276 @@
+<?php
+
+namespace App\Http\Controllers\Server;
+
+use App\Http\Controllers\Controller;
+use App\Jobs\TrafficFetchJob;
+use App\Jobs\TrafficServerLogJob;
+use App\Jobs\TrafficUserLogJob;
+use App\Models\ServerVmess;
+use App\Models\User;
+use App\Utils\CacheKey;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
+
+/*
+ * Vmess Aurora
+ * Github: https://github.com/tokumeikoi/aurora
+ */
+
+class DeepbworkController extends Controller
+{
+    /**
+     * 后端获取用户User
+     *
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function user(Request $request)
+    {
+        ini_set('memory_limit', -1);
+        $reqNodeId = $request->input('node_id');
+        $clientIP = $request->getClientIp();
+
+        /**
+         * @var ServerVmess $server
+         */
+        $server = ServerVmess::find($reqNodeId);
+        if ($server === null) {
+            return response([
+                'msg' => 'false',
+                'data' => 'server is not found',
+            ]);
+        }
+        $result = [];
+        $users = $server->findAvailableUsers();
+        foreach ($users as $user) {
+            $user->setAttribute("v2ray_user", [
+                "uuid" => $user->getAttribute(User::FIELD_UUID),
+                "email" => sprintf("%s@v2board.user", $user->getAttribute(User::FIELD_UUID)),
+                "alter_id" => $server->getAttribute(ServerVmess::FIELD_ALTER_ID),
+                "level" => 0,
+            ]);
+            unset($user['uuid']);
+            unset($user['email']);
+            array_push($result, $user);
+        }
+
+        Redis::hset(CacheKey::get(CacheKey::SERVER_VMESS_LAST_CHECK_AT, $server->getKey()), $clientIP, time());
+        Redis::hset(CacheKey::SERVER_VMESS_LAST_CHECK_AT, $server->getKey(), time());
+
+        return response([
+            'msg' => 'ok',
+            'data' => $result,
+        ]);
+    }
+
+    /**
+     * submit
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function submit(Request $request)
+    {
+        $reqNodeId = $request->input('node_id');
+        $clientIP = $request->getClientIp();
+
+        /**
+         * @var ServerVmess $server
+         */
+        $server = ServerVmess::find($reqNodeId);
+        if ($server === null) {
+            return response([
+                'ret' => 0,
+                'msg' => 'server is not found'
+            ]);
+        }
+        $data = file_get_contents('php://input');
+        $data = json_decode($data, true);
+        if ($data === null || !is_array($data)) {
+            return response([
+                'ret' => 0,
+                'msg' => 'params error'
+            ]);
+        }
+
+        $userIds = [];
+        foreach ($data as $item) {
+            $rate = $server->getAttribute(ServerVmess::FIELD_RATE);
+            $u = $item[User::FIELD_U] * $rate;
+            $d = $item[User::FIELD_D] * $rate;
+            $userId = $item['user_id'];
+            array_push($userIds, $userId);
+            TrafficFetchJob::dispatch($u, $d, $userId, $clientIP);
+            TrafficServerLogJob::dispatch($item[User::FIELD_U], $item[User::FIELD_D], 0, $server->getKey(), ServerVmess::TYPE);
+            TrafficUserLogJob::dispatch($u, $d, 0, $userId);
+        }
+
+        Redis::hset(CacheKey::get(CacheKey::SERVER_VMESS_LAST_PUSH_AT, $server->getKey()), $clientIP, time());
+        Redis::hset(CacheKey::SERVER_VMESS_LAST_PUSH_AT, $server->getKey(), time());
+        Redis::hset(CacheKey::get(CacheKey::SERVER_VMESS_ONLINE_USER, $server->getKey()), $clientIP,
+            json_encode(['time' => time(), 'count' => count($data), 'user_ids' => $userIds]));
+
+        return response([
+            'ret' => 1,
+            'msg' => 'ok'
+        ]);
+    }
+    
+    public function online(Request $request)
+    {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        ini_set('memory_limit', -1);
+        include "trans.php";
+        $sessionId = $request->session()->get('id');
+        $reqNodeId = $request->input('node_id');
+        $clientIP = $request->getClientIp();
+        $con = mysqli_connect("$local", "$nsv", "$ps", "$usr");
+        $time = time();
+        $get_time = mysqli_query($con, "SELECT * FROM v2_online_ip");
+    while ($rowget_time = mysqli_fetch_array($get_time)) {
+        $time_update = $rowget_time["time"];
+        $id = $rowget_time["id"];
+        $user_id = $rowget_time["user_id"];
+        if ($time_update < time() - 50) {
+            
+          $stmt = mysqli_prepare($con, "DELETE FROM v2_online_ip WHERE id=?");
+          mysqli_stmt_bind_param($stmt, "s", $id);
+          mysqli_stmt_execute($stmt);
+          mysqli_stmt_close($stmt);
+          
+          $stmt = mysqli_prepare($con, "UPDATE v2_user SET device_online='0', ip_online='' WHERE id=?");
+          mysqli_stmt_bind_param($stmt, "s", $user_id);
+          mysqli_stmt_execute($stmt);
+          mysqli_stmt_close($stmt);
+        }
+    }
+        $server = ServerVmess::find($reqNodeId);
+        if ($server === null) {
+            return response([
+                'ret' => 0,
+                'msg' => 'server is not found'
+            ]);
+        }
+        $data = file_get_contents('php://input');
+
+        $data = json_decode($data, true);
+        if ($data === null || !is_array($data)) {
+            return response([
+                'ret' => 0,
+                'msg' => 'params error'
+            ]);
+        }
+
+        foreach ($data as $items) {
+            $userId = $items["user_id"];
+            $Ip = $items["ip"];
+            $stmt = mysqli_prepare($con, "SELECT * FROM v2_online_ip WHERE user_id = ?");
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            mysqli_stmt_execute($stmt);
+            $checkuser = mysqli_stmt_get_result($stmt);
+            mysqli_stmt_close($stmt);
+            $dem_user_id = mysqli_num_rows($checkuser);
+            if ($dem_user_id == 0) {
+                $ThemOnline = mysqli_prepare($con, "INSERT INTO v2_online_ip (user_id, ip, time) VALUES (?, ?, ?)");
+                mysqli_stmt_bind_param($ThemOnline, "isi", $userId, $Ip, $time);
+                mysqli_stmt_execute($ThemOnline);
+                mysqli_stmt_close($ThemOnline);
+            }
+            if ($dem_user_id != 0) {
+                
+                $stmt = mysqli_prepare($con, "SELECT * FROM v2_online_ip WHERE ip = ? AND user_id = ?");
+                mysqli_stmt_bind_param($stmt, "si", $Ip, $userId);
+                mysqli_stmt_execute($stmt);
+                $CheckDemIP = mysqli_stmt_get_result($stmt);
+                mysqli_stmt_close($stmt);
+                
+                $dem_ip = mysqli_num_rows($CheckDemIP);
+                
+                if ($dem_ip == 0) {
+                    $ThemOnline2 = mysqli_prepare($con, "INSERT INTO v2_online_ip (user_id, ip, time) VALUES (?, ?, ?)");
+                    mysqli_stmt_bind_param($ThemOnline2, "isi", $userId, $Ip, $time);
+                    mysqli_stmt_execute($ThemOnline2);
+                    mysqli_stmt_close($ThemOnline2);
+                }
+                if ($dem_ip != 0) {
+                    $ThemOnline3 = mysqli_prepare($con, "UPDATE v2_online_ip SET time=? WHERE ip=? AND user_id = ?");
+                    mysqli_stmt_bind_param($ThemOnline3, "isi", $time, $Ip, $userId);
+                    mysqli_stmt_execute($ThemOnline3);
+                    mysqli_stmt_close($ThemOnline3);
+                }
+            }
+            
+            $stmt = mysqli_prepare($con, "SELECT * FROM v2_online_ip WHERE user_id = ?");
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            mysqli_stmt_execute($stmt);
+            $CheckDemOnline = mysqli_stmt_get_result($stmt);
+            mysqli_stmt_close($stmt);
+            
+            $dem_online = mysqli_num_rows($CheckDemOnline);
+            
+            $CapNhatDemOnline = mysqli_prepare($con, "UPDATE v2_user SET device_online=? WHERE id=?");
+            mysqli_stmt_bind_param($CapNhatDemOnline, "ii", $dem_online, $userId);
+            mysqli_stmt_execute($CapNhatDemOnline);
+            mysqli_stmt_close($CapNhatDemOnline);
+            
+            $stmt = mysqli_prepare($con, "SELECT * FROM v2_online_ip WHERE user_id = ? ");
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            mysqli_stmt_execute($stmt);
+            $get_ips = mysqli_stmt_get_result($stmt);
+            mysqli_stmt_close($stmt);
+            
+            $ips = '';
+            while ($rowget_ips = mysqli_fetch_array($get_ips)) {
+                $ip = $rowget_ips["ip"];
+                $ips .= $ip . ", ";
+            }
+
+            $ips = rtrim($ips, ", ");
+                $CapNhatIP = mysqli_prepare($con, "UPDATE v2_user SET ip_online=? WHERE id=?");
+                mysqli_stmt_bind_param($CapNhatIP, "si", $ips, $userId);
+                mysqli_stmt_execute($CapNhatIP);
+                mysqli_stmt_close($CapNhatIP);
+            }
+        
+        mysqli_close($con);
+        return response([
+            'ret' => 1,
+            'msg' => 'ok'
+        ]);
+    }
+
+    /**
+     * config
+     *
+     * @param Request $request
+     */
+    public function config(Request $request)
+    {
+        $reqNodeId = $request->input('node_id');
+        $reqLocalPort = $request->input('local_port');
+        if (empty($reqNodeId) || empty($reqLocalPort)) {
+            abort(500, 'parameter error');
+        }
+        /**
+         * @var ServerVmess $server
+         */
+        $server = ServerVmess::find($reqNodeId);
+        if ($server === null) {
+            abort(500, 'server is not found');
+        }
+
+        try {
+            $json = $server->config($reqLocalPort);
+            die(json_encode($json, JSON_UNESCAPED_UNICODE));
+
+        } catch (Exception $e) {
+            abort(500, $e->getMessage());
+        }
+
+    }
+}

@@ -1,0 +1,43 @@
+.searchBtn {
+    background-color: #0000FF; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Loại bỏ viền */
+    border-radius: 5px; /* Bo tròn góc */
+    padding: 10px 20px; /* Kích thước nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ khi di chuột qua */
+  }
+  
+  /* Hiệu ứng hover */
+  .searchBtn:hover {
+    background-color: #0000CC; /* Màu nền xanh đậm khi hover */
+  }
+  .col-md-4.col-xs-12 .dangky {
+    background-color: #007bff; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Loại bỏ viền */
+    border-radius: 5px; /* Bo góc */
+    padding: 10px 20px; /* Kích thước nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ khi di chuột qua */
+  }
+  
+  .col-md-4.col-xs-12 .dangky:hover {
+    background-color: #0056b3; /* Màu nền xanh đậm khi hover */
+  }
+   .col-md-4.col-xs-12 .dangkycongviec {
+    background-color: #007bff; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Loại bỏ viền */
+    border-radius: 5px; /* Bo góc */
+    padding: 10px 20px; /* Kích thước nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ khi di chuột qua */
+  }
+  
+  .col-md-4.col-xs-12 .dangkycongviec:hover {
+    background-color: #0056b3; /* Màu nền xanh đậm khi hover */
+  }
+  
+  
+  

@@ -1,0 +1,588 @@
+.menu-container {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    display: flex;
+    width: 100%;
+    
+
+}
+
+.menu-container button {
+    display: block;
+    width: 100%;
+    margin-bottom: 0px;
+    padding: 10px 0px;
+    background-color: #fff;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.menu-container button:hover {
+    background-color: #CEF6F5;
+}
+
+.menu-container button:active {
+    background-color: lightblue;
+}
+
+
+.form-container4 {
+    display: none;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+.menu4{
+    flex: 1;
+    width: 20%;
+    padding: 20px;
+}
+.menu5{
+    flex: 3;
+    width: 80%;
+    padding: 10px;
+   
+    background-color: #fff;
+    overflow-y: auto;
+    
+
+}
+.red-star {
+    color: red; /* Đặt màu chữ là đỏ */
+    margin-right: 500px;
+}
+.kiemduyet {
+    font-size: 0.8em; /* Đặt kích thước font nhỏ hơn */
+    opacity: 0.7; /* Đặt độ mờ */
+}
+.re{
+    color: red;
+    margin-right: 200px;
+
+}
+.hinhthu{
+    width: 50%;
+}
+.re2{
+    color: red;
+   
+
+}
+.re3{
+   
+    margin-right: 150px;
+
+}
+.re4{
+   
+    margin-right: 30px;
+
+}
+.re5{
+    color: red;
+    margin-right: 280px;
+
+}
+.scroll-wrapper {
+    height: 50vh;/* Độ cao cố định cho khung chứa */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc khi cần thiết */
+}
+.input-with-addon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-addon {
+    margin-left: 5px; /* Khoảng cách giữa input và chữ "Tháng" */
+  }
+  .extended-input {
+    width: 300px; /* Điều chỉnh chiều rộng của ô input */
+  }
+  .gray-diachi-form {
+    background-color: #E6E6E6; /* Màu xám nhạt cho nền của form */
+    padding: 20px;
+    border-radius: 5px;
+ 
+
+  }
+  .horizontal-line {
+    width: 100%; /* Chiều rộng của đường kẻ ngang */
+    height: 0.25px; /* Độ dày của đường kẻ ngang */
+    background-color: #000; 
+    margin-top: 30px; /* Màu của đường kẻ ngang */
+  }
+  .custom-input {
+    width: 1000px;
+    height: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow: auto;
+}
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  .checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  .checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .terms u {
+      color: blue;
+    text-decoration: underline; /* Gạch chân */
+  }
+ 
+  
+  .button-container1 {
+    font-size: 0; /* Loại bỏ khoảng trắng giữa các phần tử */
+  }
+  
+  .button-container1 button {
+    display: inline-block; /* Hiển thị các nút cùng 1 hàng */
+    padding: 10px 20px; /* Padding cho nút */
+    border: none; /* Loại bỏ viền */
+    border-radius: 5px; /* Bo tròn góc */
+    margin-left: 5px; /* Khoảng cách giữa các nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ khi di chuột qua */
+  }
+ 
+
+
+.containertin {
+  display: flex;
+}
+
+.boxx {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  color: black;
+  margin: 0 20px; /* Khoảng cách 5px giữa các ô */
+  position: relative; /* Để căn chỉnh số */
+}
+
+.number {
+  position: absolute;
+  bottom: 5px; /* Đặt số ở dưới */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền cho số */
+  padding: 2px 5px; /* Khoảng cách giữa số và nền */
+  border-radius: 3px; /* Góc cong cho nền số */
+}
+
+
+.red {
+  background-color: #A9F5F2;
+}
+
+.blue {
+  background-color: #D0A9F5;
+}
+
+.green {
+  background-color: #F2F2F2;
+}
+
+.yellow {
+  background-color: #CEECF5;
+}
+
+.orange {
+  background-color: #81BEF7;
+}
+#downloadButton {
+  background-color: #F2F2F2;
+  color: blue;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#downloadButton i {
+  margin-right: 5px;
+}
+.line {
+  width: 100%;
+  height: 0.5px;
+  background-color: black;
+}
+.trangthai{
+  background-color: #F79F81; /* Màu xanh */
+  color: white; /* Màu chữ */
+  padding: 5px 10px; /* Khoảng cách bên trong */
+  border-radius: 5px; /* Góc cong */
+}
+.roundedBox {
+  width: 30px; /* Đặt chiều rộng của hình tròn */
+  height: 30px;
+  border-radius: 50%; /* Đặt góc cong cho hình tròn */
+  background-color: #CCCCCC; /* Đặt màu nền là màu xám */
+  padding: 9px; /* Đặt khoảng cách bên trong */
+}
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.page-numbers {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.prev, .next {
+  padding: 5px 10px;
+  margin: 0 5px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.prev:hover, .next:hover,
+.page-numbers:hover {
+  background-color: #f0f0f0;
+}
+
+.header-topp {
+  background-image: url('https://i.pinimg.com/originals/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg'), url('../imgs/anhlogo.png');
+  background-size: 76% auto, contain; /* 80% chiều rộng và tự động chiều cao cho ảnh thứ nhất, và ảnh thứ hai được contain */
+  background-position: right, left; /* ảnh thứ nhất nằm bên phải, ảnh thứ hai nằm bên trái */
+  background-repeat: no-repeat; /* không lặp lại hình ảnh */
+  width: 100%; /* đảm bảo rằng phần tử div mở rộng ra toàn bộ chiều rộng của trang */
+  height: 120px; /* hoặc bất kỳ giá trị chiều cao nào bạn muốn */
+  /* Các thuộc tính CSS khác */
+}
+
+.cl-right-lang {
+  width: 300px;
+  margin-top: 40px;
+
+    display: inline-block;
+    margin-right: 20px; /* Khoảng cách giữa hai phần tử */
+
+
+
+}
+.form-group1:hover {
+  border: 1px solid #5882FA; /* Đổi màu viền thành màu xanh khi hover */
+}
+.hidden {
+  display: none;
+}
+.border-green-with-heart {
+  position: relative; /* Đảm bảo vị trí tuyệt đối cho hình trái tim */
+  border: 1px solid #5882FA; /* Viền màu xanh */
+  padding: 10px; /* Padding tùy ý */
+}
+.mauxanh {
+  background-color: #EFF8FB;
+
+}
+.top-row {
+  display: flex; /* Sử dụng flexbox để các phần tử con nằm trên cùng một hàng */
+   /* Các phần tử con sẽ được căn giữa và căn cách xa nhau */
+  align-items: center; /* Căn các phần tử con theo chiều dọc */
+}
+.top-row1 {
+  display: flex; /* Sử dụng flexbox để các phần tử con nằm trên cùng một hàng */
+
+  align-items: center; /* Căn các phần tử con theo chiều dọc */
+}
+
+
+.top-row1 > div {
+  margin-right:50px; /* Khoảng cách giữa các phần tử div là 20px */
+}
+.avatar-img-wrapper {
+    display: inline-block; /* Hiển thị avatar là một phần tử inline */
+    vertical-align: middle; /* Căn avatar theo chiều dọc giữa hàng */
+}
+
+.avatar-text {
+    display: inline-block; /* Hiển thị tên người dùng là một phần tử inline */
+    vertical-align: middle; /* Căn tên người dùng theo chiều dọc giữa hàng */
+    margin-left: 5px; /* Tạo khoảng cách giữa avatar và tên người dùng */
+}
+.tab-content {
+  display: none;
+
+ 
+
+}
+
+
+#account-form, #company-form {
+  width: 100%; 
+  height: 100%; 
+}
+
+
+.tab-content.active {
+  display: block;
+}
+.hline {
+  width: 120px; /* Độ dài của đường gạch */
+  height: 1px; /* Độ dày của đường gạch */
+  background-color: blue; 
+  margin-top: 10px;/* Màu sắc của đường gạch */
+}
+#downloaddanhsach {
+  margin-left: 40px;
+  padding: 10px 20px;
+  width: 120px;
+  font-size: 16px;
+  background-color: #ffffff; /* Màu nền trắng */
+  color: #007bff; /* Màu chữ xanh */
+  border: 0.5px solid #000000; /* Viền màu đen độ dày 2px */
+  border-radius: 5px; /* Độ cong góc của nút */
+  cursor: pointer;
+}
+
+#downloaddanhsach:hover {
+  background-color: #f2f2f2; /* Màu nền trắng nhạt khi di chuột qua */
+}
+
+.containerdanhsachdonhang {
+  display: flex;
+}
+
+.boxxx {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  color: black;
+  margin: 0 10px; /* Khoảng cách 5px giữa các ô */
+  position: relative; /* Để căn chỉnh số */
+}
+
+.soluong {
+  position: absolute;
+  bottom: 5px; /* Đặt số ở dưới */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền cho số */
+  padding: 2px 5px; /* Khoảng cách giữa số và nền */
+  border-radius: 3px; /* Góc cong cho nền số */
+}
+
+
+
+
+.mua ,.damua ,.chuakichhoat{
+  background-color: #F2F2F2;
+}
+#dangkydichvu-btn {
+  background-color: #0101DF; /* Màu nền */
+  border: none; /* Loại bỏ viền */
+  color: white; /* Màu chữ */
+  padding: 10px 20px; /* Kích thước nút */
+  text-align: center; /* Căn giữa nội dung */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  display: inline-block;
+  font-size: 16px; /* Kích thước chữ */
+  margin-left: 50px;
+  margin-top: 40px;
+  cursor: pointer; /* Con trỏ khi rê chuột */
+  border-radius: 8px; 
+
+  width: 200px;/* Độ cong góc */
+}
+
+#dangkydichvu-btn:hover {
+  background-color: #007bff; /* Màu nền hover */
+}
+#downloadExcel {
+  background-color: #F2F2F2;
+  color: blue;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#downloadExcel i {
+  margin-right: 5px;
+}
+#chitiet {
+  background-color: #F2F2F2;
+  color: blue;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 200px;
+}
+
+#chitiet i {
+  margin-left: 5px;
+}
+
+
+.horizontal-line1 {
+  width: 100%; /* Chiều rộng của đường kẻ ngang */
+  height: 0.5px; /* Độ dày của đường kẻ ngang */
+  background-color: #000; 
+  margin-top: 30px; /* Màu của đường kẻ ngang */
+}
+#copyButton {
+  background-color: #F2F2F2;
+  color: blue;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+ margin-left: 10px;
+  cursor: pointer;
+  width: 60px;
+}
+#downloadExcel1 {
+  background-color: #A9BCF5;
+  color: blue;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#downloadExcel1 i {
+  margin-right: 5px;
+}
+textarea#gioi_thieu_danh_nghiep {
+  width: 100%; 
+  min-height: 200px;
+  resize: vertical;
+}
+.menuchitietcongty {
+  flex: 3;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+ 
+  background-color: #fff;
+  overflow-y: auto;
+  
+
+}
+.form-thongtinchung {
+  width: 95%;
+  background-color: #E3CEF6; /* Màu hồng nhạt */
+  padding: 20px;
+  box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước của phần tử */
+  margin-left: 20px; /* Khoảng cách bên phải 20px */
+}
+.date-container {
+  display: flex;
+  align-items: center;
+}
+
+.date-icon {
+  margin-right: 10px;
+  font-size: 24px;
+  color:#9A2EFE;
+}
+#dangkycongviec {
+  background-color: #0101DF; /* Màu nền */
+  border: none; /* Loại bỏ viền */
+  color: white; /* Màu chữ */
+  padding: 10px 20px; /* Kích thước nút */
+  text-align: center; /* Căn giữa nội dung */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  display: inline-block;
+  font-size: 16px; /* Kích thước chữ */
+  margin-left: 50px;
+  margin-top: 40px;
+  cursor: pointer; /* Con trỏ khi rê chuột */
+  border-radius: 8px; 
+
+  width: 200px;/* Độ cong góc */
+}
+
+#dangkycongviec:hover {
+  background-color: #007bff; /* Màu nền hover */
+}
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+
+
+

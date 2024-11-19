@@ -1,0 +1,14 @@
+.searchBtn {
+    background-color: #0000FF; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Loại bỏ viền */
+    border-radius: 5px; /* Bo tròn góc */
+    padding: 10px 20px; /* Kích thước nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ khi di chuột qua */
+  }
+  
+  /* Hiệu ứng hover */
+  .searchBtn:hover {
+    background-color: #0000CC; /* Màu nền xanh đậm khi hover */
+  }

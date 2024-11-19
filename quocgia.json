@@ -1,0 +1,33 @@
+{
+  "Asia": {
+    "1": "Viet Nam",
+    "2": "Japan",
+    "3": "India",
+    "4": "China"
+  },
+  "Europe": {
+    "1": "France",
+    "2": "Germany",
+    "3": "United Kingdom",
+    "4": "Italy"
+  },
+  "North America": {
+    "1": "United States",
+    "2": "Canada",
+    "3": "Mexico"
+  },
+  "South America": {
+    "1": "Brazil",
+    "2": "Argentina",
+    "3": "Colombia"
+  },
+  "Africa": {
+    "1": "Nigeria",
+    "2": "Egypt",
+    "3": "South Africa"
+  },
+  "Oceania": {
+    "1": "Australia",
+    "2": "New Zealand"
+  }
+}
